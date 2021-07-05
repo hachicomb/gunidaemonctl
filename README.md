@@ -11,6 +11,7 @@
 
 - Ubuntu 20.04.2 LTS
 - GNU bash, version 5.0.17(1)-release (x86_64-pc-linux-gnu)
+- Python 3.8.10 (venv)
 
 ```
 fastapi==0.65.2
