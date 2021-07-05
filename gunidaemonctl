@@ -1,0 +1,97 @@
+#!/bin/env bash
+# There is NO warranty!
+
+GUNICORN_CONFIG_PATH="./gunicorn_config/"
+LOGS_DIR="logs"
+APP_ID=$2
+COMMAND=$1
+GUNICORN_CONF="${GUNICORN_CONFIG_PATH}${APP_ID}.py"
+
+function valid_pid() {
+  if [[ $1 =~ ^([0-9]{1,})$ ]]; then
+    return 1
+  fi
+  return 0
+}
+
+function get_pid () {
+  pid=`ps ax -o pid,args | grep gunicorn | grep -v grep | grep $APP_ID | grep master | awk '{print $1}'`
+  echo $pid
+}
+
+function show_usage_and_exit() {
+  echo "gunidaemonctl Ver.0.1 (There is NO WARRANTY!)"
+  echo ""
+  echo "Usage:" 1>&2
+  echo "gunidaemonctl [command] [app_id]" 1>&2
+  echo "" 1>&2
+  echo "[app_id]: It shoud be defined by the filename of the gunicorn config file. e.g.) '[app_id].py'" 1>&2
+  echo "[command]: start | ps | pid | stop"	
+  exit 1
+}
+
+function command_start () {
+  echo "The gunicorn was tried to launch."
+  gunicorn -c $GUNICORN_CONF
+}
+
+function command_ps () {
+  echo "The list of processes:"
+  ps aux | grep gunicorn | grep -v grep | grep $APP_ID
+}
+
+function command_pid () {
+  pid=`get_pid`
+  
+  valid_pid $pid
+  if [ $? -eq 1 ]; then
+    echo "master pid:"
+    echo $pid
+  else
+    echo "The pid for your app seems not found."
+  fi
+}
+
+function command_stop() {
+  pid=`get_pid`
+  
+  valid_pid $pid
+  if [ $? -eq 1 ]; then
+    echo "The master pid(${pid}) was killed:"
+    kill $pid
+  else
+    echo "The pid for your app seems not found."
+  fi
+}
+
+if [ $# -ne 2 ]; then
+  show_usage_and_exit
+fi
+
+if [ ! -d "$LOGS_DIR" ]; then
+  `mkdir -p $LOGS_DIR`;
+fi
+
+if [ ! -f "$GUNICORN_CONF" ]; then
+  echo "NO EXIST the gunicorn_config_file (${GUNICORN_CONF})."
+  exit 1
+fi
+
+
+case "$COMMAND" in
+  "start")
+    command_start
+    ;;
+  "ps")
+    command_ps
+    ;;
+  "pid")
+    command_pid
+    ;;
+  "stop")
+    command_stop
+    ;;
+  *)
+    echo "The [command] you set is invalid."
+    ;;
+esac
