@@ -20,6 +20,12 @@ setproctitle==1.2.2
 uvicorn==0.14.0
 ```
 
+# Isntall packages using by PIP
+
+```
+pip install -r requirements.txt
+```
+
 ## Overview
 
 - Control the gunicorn's daemons using by Bash.
@@ -51,7 +57,7 @@ GUNICORN_CONFIG_PATH="./gunicorn_config/"
 ### gunicorn config
 
 - Create gunicorn config files.
-- The files' name must be same as proc_name.
+- The filename must be same as proc_name.
 
 ```bash
 vim gunicorn_config/guni_conf_staging.py
