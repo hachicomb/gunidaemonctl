@@ -21,7 +21,10 @@ setproctitle==1.2.2
 uvicorn==0.14.0
 ```
 
-# Isntall packages using by PIP
+### Isntall packages using by pip
+
+- This procedure is needed to confirm examples.
+- If you don't need examples, you need the only gunidaemonctl file.
 
 ```
 pip install -r requirements.txt
