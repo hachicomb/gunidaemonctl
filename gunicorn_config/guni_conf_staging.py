@@ -4,7 +4,7 @@ wsgi_app = 'main_fast_api:app'
 workers = 2
 worker_class = 'uvicorn.workers.UvicornWorker'
 bind = '127.0.0.1:1080'
-raw_env = ['MODE=PROD']
+raw_env = ['MODE=STAGING']
 daemon = True
 pidfile = './logs/staging_prod.pid'
 errorlog = './logs/staging_error_log.txt'

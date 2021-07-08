@@ -12,6 +12,7 @@
 - Ubuntu 20.04.2 LTS
 - GNU bash, version 5.0.17(1)-release (x86_64-pc-linux-gnu)
 - Python 3.8.10 (venv)
+- Python packages is shown below (FastAPI is optional)
 
 ```
 fastapi==0.65.2
@@ -37,16 +38,18 @@ pip install -r requirements.txt
 │   ├── guni_conf_prod.py
 │   └── guni_conf_staging.py
 ├── gunidaemonctl              <-- Bash script
-├── main.py                    <-- Python Web app for prod
-└── main_fast_api.py           <-- Python Web app for staging
+├── main.py                    <-- Python Web app example1
+└── main_fast_api.py           <-- Python Web app example2 (Use FastAPI)
 ```
 
 ## config
 
 
-### Apps config
+### gunidaemonctl config
 
 - Set path for gunicorn config files.
+- Absolute path is recommended.
+- An example is shown below.
 
 ```
 vim gunidaemonctl
@@ -56,14 +59,28 @@ GUNICORN_CONFIG_PATH="./gunicorn_config/"
 
 ### gunicorn config
 
-- Create gunicorn config files.
+- Create gunicorn config files in the directory you set on gunidaemonctl-bash.
 - The filename must be same as proc_name.
+- Treat the filename as [app_id].
+- Set the unique id because it's used to identify app's process id.
+- An example is shown below.
 
 ```bash
 vim gunicorn_config/guni_conf_staging.py
 
 proc_name = 'guni_conf_staging' # The proc name must be set to the same value as the filename of gunicorn config.
 ```
+
+- Also python Web app path is set in the gunicorn config.
+- Absolute path is recommended.
+- An example is shown below.
+
+```bash
+vim gunicorn_config/guni_conf_staging.py
+
+pythonpath = './'
+```
+
 
 ## Command
 
@@ -74,7 +91,7 @@ proc_name = 'guni_conf_staging' # The proc name must be set to the same value as
 ```
 
 - [command] : start | ps | pid | stop
-- [app_id]  : proc_name
+- [app_id]  : proc_name (gunicorn config filename)
 
 
 ### Start the daemon
