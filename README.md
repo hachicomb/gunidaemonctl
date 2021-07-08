@@ -107,7 +107,7 @@ pythonpath = './'
 ./gunidaemonctl stop guni_conf_staging
 ```
 
-#### Show the processes
+### Show the processes of gunicorn
 
 ```
 ./gunidaemonctl ps guni_conf_staging
