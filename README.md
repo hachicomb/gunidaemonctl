@@ -85,15 +85,15 @@ pythonpath = './'
 ```
 
 
-## Command
+## Operation
 
 ### Outline
 
 ```
-./gunidaemonctl [command] [app_id]
+./gunidaemonctl [operation] [app_id]
 ```
 
-- [command] : start | ps | pid | stop
+- [operation] : start | ps | pid | stop
 - [app_id]  : proc_name (gunicorn config filename)
 
 
