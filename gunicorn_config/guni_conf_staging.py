@@ -6,7 +6,7 @@ worker_class = 'uvicorn.workers.UvicornWorker'
 bind = '127.0.0.1:1080'
 raw_env = ['MODE=STAGING']
 daemon = True
-pidfile = './logs/staging_prod.pid'
+pidfile = './logs/staging.pid'
 errorlog = './logs/staging_error_log.txt'
 accesslog = './logs/staging_access_log.txt'
 loglevel = 'info'
